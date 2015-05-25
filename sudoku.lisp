@@ -8,46 +8,47 @@
 
 (in-package #:breakds.sudoku-demo)
 
+(def-widget-1 grid-3x3 ()
+  (:table ((style :display "flex"))
+          (:tr ()
+               (map (lambda (child)
+                      (:td ((style :padding 0)) child))
+                    (:children 0 1 2)))
+          (:tr ()
+               (map (lambda (child)
+                      (:td ((style :padding 0)) child))
+                    (:children 3 4 5)))
+          (:tr ()
+               (map (lambda (child)
+                      (:td ((style :padding 0)) child))
+                    (:children 6 7 8)))))
+
+
+
 (def-widget-1 sudoku-cell ((digit :attribute)
-			   (cell-side :attribute))
-  (:div ((class "card-panel blue lighten-2 valign-wrapper z-depth-2 col s4")
-	 (style :height cell-side
-		:margin-top 0
-		:margin-bottom 0))
-	(:span ((class "white-text valign")) digit)))
+			   (cell-side :attribute)
+                           (cell-margin :attribute))
+  (:div ((class "card-panel blue lighten-2 valign-wrapper z-depth-1")
+         (style  :height cell-side
+                 :width cell-side
+                 :margin-left cell-margin
+                 :margin-right cell-margin
+                 :margin-top cell-margin
+                 :margin-bottom cell-margin))
+	(:div ((class "white-text")
+               (style :font-size "20"))
+              digit)))
+
 
 (def-widget-1 sudoku-group ((digits :attribute)
 			    (cell-side :attribute)
-			    (half-margin :attribute))
-  (:div ((style :width (* 3 cell-side)))
-  	(:div ((class "row")
-	       (style :margin-top 0
-		      :margin-bottom 5))
-  	      (:sudoku-cell ((digit (aref digits 0))
-			     (cell-side cell-side)))
-  	      (:sudoku-cell ((digit (aref digits 1))
-			     (cell-side cell-side)))
-  	      (:sudoku-cell ((digit (aref digits 2))
-			     (cell-side cell-side))))
-  	(:div ((class "row")
-	       (style :margin-top 0
-		      :margin-bottom 5))
-	      (:sudoku-cell ((digit (aref digits 3))
-			     (cell-side cell-side)))
-	      (:sudoku-cell ((digit (aref digits 4))
-			     (cell-side cell-side)))
-	      (:sudoku-cell ((digit (aref digits 5))
-			     (cell-side cell-side))))
-  	(:div ((class "row")
-	       (style :margin-top 0
-		      :margin-bottom 5))
-	      (:sudoku-cell ((digit (aref digits 3))
-			     (cell-side cell-side)))
-	      (:sudoku-cell ((digit (aref digits 4))
-			     (cell-side cell-side)))
-	      (:sudoku-cell ((digit (aref digits 5))
-			     (cell-side cell-side))))))
-	
+			    (cell-margin :attribute))
+  (:grid-3x3 ()
+             (map (lambda (x) 
+                    (:sudoku-cell ((digit x)
+                                   (cell-margin cell-margin)
+                                   (cell-side cell-side))))
+                  digits :this this)))
 
 (def-app sudoku-demo ()
   :title "Sudoku Demo"
@@ -56,6 +57,7 @@
   :includes ("https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css"
 	     "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js")
   :widget (:sudoku-group ((digits (array 1 2 5 4 3 9 8 7 6))
-			  (cell-side 40))))
+			  (cell-side 50)
+                          (cell-margin 4))))
 
 
