@@ -35,30 +35,27 @@
                            (on-focus :attribute))
   (labels ((component-will-update ()
              nil))
-    (:div ((class (+ "card-panel valign-wrapper go-appear"
-                     ;; pick color based on whether it is fixed or not.
-                     " " (if (@ cell-data :fixed) "orange" "teal")
-                     (if (@ cell-data :is-focused)
-                         " lighten-3"
-                         " lighten-4")
-                     (if (@ cell-data :is-focused)
-                         ""
-                         " z-depth-3")))
-           ;; (animation :invoke "on-start"
-           ;;            :keyframe ("0%" :opacity 0)
-           ;;            :keyframe ("100%" :opacity 1)
-           ;;            :delay "0s"
-           ;;            :direction "normal"
-           ;;            :duration "0.5s"
-           ;;            :fill-mode "haha"
-           ;;            :iteration-count "2"
-           ;;            :play-state "on"
-           ;;            :timeing-function "ease-out")
+    (:div ((class "card-panel" "valign-wrapper" "go-appear"
+                  ;; pick color based on whether it is fixed or not.
+                  (if (@ cell-data :fixed) "orange" "teal")
+                  (if (@ cell-data :is-focused)
+                      "lighten-3"
+                      "lighten-4")
+                  (if (@ cell-data :is-focused)
+                      "z-depth-3" ""))
+           (animation :keyframe ("0%" :opacity 0)
+                      :keyframe ("100%" :opacity 1)
+                      :delay "0s"
+                      :direction "normal"
+                      :duration "0.5s"
+                      :fill-mode "haha"
+                      :iteration-count "1"
+                      :timeing-function "ease-in")
            (style :height (if (@ cell-data :is-focused)
-                              (* side 0.95)
+                              (* side 1.05)
                               side)
                   :width (if (@ cell-data :is-focused)
-                             (* side 0.95)
+                             (* side 1.05)
                              side)
                   :margin-left 0
                   :margin-right 0
@@ -73,7 +70,7 @@
                                 " text-lighten-1"
                                 " text-lighten-2")))
                   (style :font-size (if (@ cell-data :is-focused)
-                                        "16"
+                                        "24"
                                         "20")
                          :cursor "pointer"
                          :font-weight "bold"))
