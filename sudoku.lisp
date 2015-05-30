@@ -44,16 +44,16 @@
                      (if (@ cell-data :is-focused)
                          ""
                          " z-depth-3")))
-           (animation :invoke "on-start"
-                      :keyframe ("0%" :opacity 0)
-                      :keyframe ("100%" :opacity 1)
-                      :delay "0s"
-                      :direction "normal"
-                      :duration "0.5s"
-                      :fill-mode "haha"
-                      :iteration-count "2"
-                      :play-state "on"
-                      :timeing-function "ease-out")
+           ;; (animation :invoke "on-start"
+           ;;            :keyframe ("0%" :opacity 0)
+           ;;            :keyframe ("100%" :opacity 1)
+           ;;            :delay "0s"
+           ;;            :direction "normal"
+           ;;            :duration "0.5s"
+           ;;            :fill-mode "haha"
+           ;;            :iteration-count "2"
+           ;;            :play-state "on"
+           ;;            :timeing-function "ease-out")
            (style :height (if (@ cell-data :is-focused)
                               (* side 0.95)
                               side)
