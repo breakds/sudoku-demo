@@ -43,12 +43,11 @@
                       "lighten-4")
                   (if (@ cell-data :is-focused)
                       "z-depth-3" ""))
-           (animation :keyframe ("0%" :opacity 0)
-                      :keyframe ("100%" :opacity 1)
+           (animation :keyframe ("0%" :transform "scale(0.5, 0.5)")
+                      :keyframe ("100%" :transform "scale(1, 1)")
                       :delay "0s"
                       :direction "normal"
                       :duration "0.5s"
-                      :fill-mode "haha"
                       :iteration-count "1"
                       :timeing-function "ease-in")
            (style :height (if (@ cell-data :is-focused)
@@ -65,16 +64,24 @@
                                    (funcall on-focus 
                                             (@ cell-data :group)
                                             (@ cell-data :seq))))))
-          (:span ((class (+ "brown-text" 
-                            (if (@ cell-data :is-focused)
-                                " text-lighten-1"
-                                " text-lighten-2")))
-                  (style :font-size (if (@ cell-data :is-focused)
-                                        "24"
-                                        "20")
-                         :cursor "pointer"
-                         :font-weight "bold"))
-                 (@ cell-data :digit)))))
+          (:div ((class "brown-text" 
+                        (if (@ cell-data :is-focused)
+                            " text-lighten-1"
+                            " text-lighten-2"))
+                 (style :font-size (if (@ cell-data :is-focused)
+                                       "24"
+                                       "20")
+                        :cursor "pointer"
+                        :font-weight "bold"))
+                (if (@ cell-data :is-focused)
+                    (:span ((animation :keyframe ("0%" :background "rgba(141, 110, 99, 0)")
+                                       :keyframe ("100%" :background "rgba(141, 110, 99, 1)")
+                                       :direction "alternate"
+                                       :delay "0.5s"
+                                       :duration "0.5s"
+                                       :iteration-count "infinite"))
+                           (@ cell-data :digit))
+                    (:span () (@ cell-data :digit)))))))
 
 
 
@@ -97,6 +104,7 @@
 (def-widget-1 sudoku-board ((cell-side :attribute)
                             (cell-margin :attribute)
                             (group-margin :attribute)
+                            ;; states
                             (focused-group :state)
                             (focused-cell :state)
                             (data :state (map (lambda (x)
@@ -135,6 +143,7 @@
                                                              cell-margin))
                                             (cell-side cell-side))))
                           '(0 1 2 3 4 5 6 7 8) :this this)))))
+
              
 
 (def-app sudoku-demo ()
